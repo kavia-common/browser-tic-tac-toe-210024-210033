@@ -22,7 +22,7 @@ This traceability matrix maps requirements to implementation artifacts and tests
 | REQ-007 | Restart button resets state                           | tic_tac_toe_frontend/src/components/Controls.jsx; App.restart  | src/App.test.js (add: restart resets)    | Implemented   |
 | REQ-008 | Accessibility (ARIA, focus)                           | Board role=grid; Cell role=gridcell+kb; Status aria-live       | a11y test suite (planned)                | Implemented   |
 | REQ-009 | Theme toggle                                           | src/App.js (toggleTheme implemented)                           | src/App.test.js (add: toggles theme)     | Implemented   |
-| REQ-010 | Ocean Professional theme alignment                     | tic_tac_toe_frontend/src/App.css updated                       | visual verification checklist (planned)   | Implemented   |
+| REQ-010 | Ocean Professional theme alignment                     | tic_tac_toe_frontend/src/App.css; component styles use tokens  | visual verification checklist (planned)   | Implemented   |
 | REQ-011 | GxP scaffolding (audit, validation, error handling)   | App auditLog stubs; docs; logic validation                     | compliance tests (planned)               | Implemented   |
 
 ## Planned Test Cases (IDs)

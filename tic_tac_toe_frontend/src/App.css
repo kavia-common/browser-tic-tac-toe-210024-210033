@@ -1,46 +1,72 @@
 /* CSS Variables aligned to Ocean Professional theme */
 :root {
+  /* Core palette */
   --color-primary: #2563EB;   /* blue */
   --color-secondary: #F59E0B; /* amber */
   --color-error: #EF4444;     /* red */
   --color-bg: #f9fafb;        /* light background */
   --color-surface: #ffffff;   /* card surface */
   --color-text: #111827;      /* dark text */
+  --color-text-inverse: #ffffff;
 
+  /* Neutrals and borders */
+  --border-color: #e5e7eb;            /* neutral 200 */
+  --border-color-strong: #d1d5db;     /* neutral 300 */
+  --muted: #6b7280;                   /* neutral 500 */
+
+  /* Spacing and radii */
   --ring: 2px;
-  --radius: 12px;
+  --radius: 8px;
+  --radius-lg: 12px;
 
+  /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.12);
 
-  /* legacy tokens for existing template selectors */
+  /* Buttons */
+  --button-primary-bg: var(--color-primary);
+  --button-primary-text: var(--color-text-inverse);
+  --button-secondary-bg: var(--color-secondary);
+  --button-secondary-text: #111827;
+
+  /* Legacy aliases (kept for template compatibility) */
   --bg-primary: var(--color-bg);
-  --bg-secondary: #eaf1ff;
+  --bg-secondary: rgba(37, 99, 235, 0.08);
   --text-primary: var(--color-text);
   --text-secondary: var(--color-primary);
-  --border-color: #e5e7eb;
-  --button-bg: var(--color-primary);
-  --button-text: #ffffff;
 }
 
+/* Dark mode tokens */
 [data-theme="dark"] {
-  --color-bg: #0b1220;
-  --color-surface: #0f172a;
-  --color-text: #e5e7eb;
-  --border-color: #1f2937;
-  --text-secondary: #93c5fd;
-  --button-bg: #1d4ed8;
+  --color-bg: #0b1220;          /* deep navy */
+  --color-surface: #0f172a;     /* slate-900 */
+  --color-text: #e5e7eb;        /* neutral-200 */
+  --color-text-inverse: #0b1220;
+
+  --border-color: #1f2937;      /* slate-800 */
+  --border-color-strong: #374151;/* slate-700 */
+  --muted: #9ca3af;
+
+  --button-primary-bg: #1d4ed8; /* darker primary for contrast on dark */
+  --button-primary-text: #e5e7eb;
+  --button-secondary-bg: #d97706; /* amber-600 for better contrast on dark */
+  --button-secondary-text: #0b1220;
 }
 
+/* Base document layout */
 .App {
   text-align: center;
-  background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(249, 250, 251, 0.9)) fixed;
+  /* Subtle gradient from primary tint to background (Ocean Professional) */
+  background:
+    radial-gradient(1200px 600px at 100% -10%, rgba(37, 99, 235, 0.10), rgba(37, 99, 235, 0) 60%),
+    linear-gradient(180deg, rgba(37, 99, 235, 0.06), rgba(249, 250, 251, 0.9)) fixed;
   color: var(--color-text);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 200ms ease, color 200ms ease, background 300ms ease;
 }
 
+/* Container header scaffold */
 .App-header.surface {
   background-color: transparent;
   min-height: 100vh;
@@ -53,41 +79,48 @@
   padding: 48px 16px 32px;
 }
 
+/* Theme toggle = Primary button */
 .theme-toggle {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: var(--button-bg);
-  color: var(--button-text);
-  border: none;
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border: 1px solid var(--border-color-strong);
   border-radius: 9999px;
   padding: 10px 16px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 80ms ease, box-shadow 200ms ease, filter 200ms ease, background-color 200ms ease, color 200ms ease, border-color 200ms ease;
   box-shadow: var(--shadow-sm);
   outline: none;
 }
 .theme-toggle:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
-  opacity: 0.95;
+  filter: brightness(0.98);
+}
+.theme-toggle:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 .theme-toggle:focus-visible {
-  outline: var(--ring) solid var(--color-secondary);
-  outline-offset: 2px;
+  outline: var(--ring) solid var(--color-primary);
+  outline-offset: 3px;
 }
 
+/* Main gameplay card */
 .ttt-container {
   display: grid;
   gap: 16px;
   width: 100%;
   max-width: 420px;
   background: var(--color-surface);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: 20px;
   box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
 }
 
 /* Status */
@@ -95,9 +128,10 @@
   font-weight: 700;
   font-size: 18px;
   color: var(--color-text);
-  padding: 8px 12px;
-  border-radius: 10px;
-  background: linear-gradient(90deg, rgba(245, 158, 11, 0.12), rgba(255,255,255,0));
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  /* subtle amber accent gradient per theme guidance */
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-secondary) 12%, transparent), transparent);
   text-align: left;
 }
 
@@ -112,15 +146,15 @@
 .ttt-cell {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   font-size: 28px;
   font-weight: 800;
   color: var(--color-text);
   cursor: pointer;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.06s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 80ms ease, box-shadow 200ms ease, border-color 200ms ease, background-color 200ms ease, color 200ms ease, filter 200ms ease;
   display: grid;
   place-items: center;
   outline: none;
@@ -129,17 +163,25 @@
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
   border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 6%, var(--color-surface));
 }
 .ttt-cell:active {
   transform: translateY(0);
+  filter: brightness(0.98);
 }
 .ttt-cell.filled {
   cursor: default;
   border-color: var(--border-color);
+  background: var(--color-surface);
+}
+.ttt-cell:disabled,
+.ttt-cell[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 .ttt-cell:focus-visible {
   outline: var(--ring) solid var(--color-primary);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 /* Controls */
@@ -149,15 +191,15 @@
   margin-top: 4px;
 }
 .btn-restart {
-  background: var(--color-secondary);
-  color: #111827;
-  border: none;
-  border-radius: 10px;
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  border: 1px solid var(--border-color-strong);
+  border-radius: var(--radius);
   padding: 10px 16px;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.06s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  transition: transform 80ms ease, box-shadow 200ms ease, filter 200ms ease, background-color 200ms ease, color 200ms ease, border-color 200ms ease;
   outline: none;
 }
 .btn-restart:hover {
@@ -165,9 +207,17 @@
   box-shadow: var(--shadow-md);
   filter: brightness(0.98);
 }
+.btn-restart:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+.btn-restart:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 .btn-restart:focus-visible {
   outline: var(--ring) solid var(--color-primary);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 /* Responsive design for mobile */

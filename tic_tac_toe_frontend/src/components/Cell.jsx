@@ -35,6 +35,7 @@ function Cell({ index, value, onSelect, disabled }) {
       onClick={() => !disabled && onSelect()}
       onKeyDown={handleKeyDown}
       data-testid={`cell-${index}`}
+      disabled={disabled}
     >
       {value || ''}
     </button>
