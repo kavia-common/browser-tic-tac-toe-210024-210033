@@ -13,14 +13,19 @@ export default [
       globals: {
         document: true,
         window: true,
+        console: true,
+        // Jest/test globals
         test: true,
-        expect: true
+        expect: true,
+        describe: true,
+        beforeEach: true,
+        afterEach: true,
+        jest: true
       }
     },
     rules: {
-
-     'no-unused-vars': ['error', { varsIgnorePattern: 'React|App' }]
-
+      // Allow React and App symbol to be unused where needed (entry points/tests)
+      'no-unused-vars': ['error', { varsIgnorePattern: 'React|App' }]
     }
   },
   pluginJs.configs.recommended,
