@@ -1,96 +1,173 @@
-/* CSS Variables for Theme Management */
+/* CSS Variables aligned to Ocean Professional theme */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
+  --color-primary: #2563EB;   /* blue */
+  --color-secondary: #F59E0B; /* amber */
+  --color-error: #EF4444;     /* red */
+  --color-bg: #f9fafb;        /* light background */
+  --color-surface: #ffffff;   /* card surface */
+  --color-text: #111827;      /* dark text */
+
+  --ring: 2px;
+  --radius: 12px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.12);
+
+  /* legacy tokens for existing template selectors */
+  --bg-primary: var(--color-bg);
+  --bg-secondary: #eaf1ff;
+  --text-primary: var(--color-text);
+  --text-secondary: var(--color-primary);
+  --border-color: #e5e7eb;
+  --button-bg: var(--color-primary);
   --button-text: #ffffff;
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  --color-bg: #0b1220;
+  --color-surface: #0f172a;
+  --color-text: #e5e7eb;
+  --border-color: #1f2937;
+  --text-secondary: #93c5fd;
+  --button-bg: #1d4ed8;
 }
 
 .App {
   text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(249, 250, 251, 0.9)) fixed;
+  color: var(--color-text);
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
+.App-header.surface {
+  background-color: transparent;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  justify-items: center;
+  font-size: 16px;
   position: relative;
-}
-
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+  padding: 48px 16px 32px;
 }
 
 .theme-toggle {
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: var(--button-bg);
+  background: var(--button-bg);
   color: var(--button-text);
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+  border-radius: 9999px;
+  padding: 10px 16px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  outline: none;
 }
-
 .theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  opacity: 0.95;
+}
+.theme-toggle:focus-visible {
+  outline: var(--ring) solid var(--color-secondary);
+  outline-offset: 2px;
 }
 
-.theme-toggle:active {
+.ttt-container {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Status */
+.ttt-status {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-text);
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.12), rgba(255,255,255,0));
+  text-align: left;
+}
+
+/* Board grid */
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* Cell styles */
+.ttt-cell {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: var(--color-surface);
+  border: 2px solid var(--border-color);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--color-text);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.06s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  display: grid;
+  place-items: center;
+  outline: none;
+}
+.ttt-cell:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
+}
+.ttt-cell:active {
   transform: translateY(0);
 }
+.ttt-cell.filled {
+  cursor: default;
+  border-color: var(--border-color);
+}
+.ttt-cell:focus-visible {
+  outline: var(--ring) solid var(--color-primary);
+  outline-offset: 2px;
+}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Controls */
+.ttt-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+.btn-restart {
+  background: var(--color-secondary);
+  color: #111827;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.06s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  outline: none;
+}
+.btn-restart:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  filter: brightness(0.98);
+}
+.btn-restart:focus-visible {
+  outline: var(--ring) solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 /* Responsive design for mobile */
